@@ -1,0 +1,21 @@
+@page "/Security"
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView Context="Usuario">
+    <h3>Hello @Usuario.User.Identity.Name</h3>
+    <h5>Seu nivel de seguranca e @Usuario.User.FindFirst(claim => claim.Type.Equals("NivelSeguranca")).Value</h5>
+</AuthorizeView>
+
+<p>Este pedaco de texto e visivel para o nivel 0 ou acima (todos)</p>
+
+<AuthorizeView Policy="NivelSeguranca2">
+    <p>Este pedaco de texto e visivel para o nivel 2 ou acima</p>
+</AuthorizeView>
+
+<AuthorizeView Policy="NivelSeguranca4">
+    <p>Este pedaco de texto e visivel para o nivell 4 ou acima</p>
+</AuthorizeView>
+
+@code {
+
+}

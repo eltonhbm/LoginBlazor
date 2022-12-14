@@ -1,0 +1,10 @@
+﻿@page "/"
+
+<AuthorizeView Context="Usuario">
+    <Authorized>
+        Hello: @Usuario.User.Identity.Name
+    </Authorized>
+    <NotAuthorized>
+        <a href="/login" class="btn btn-primary">Entrar</a>
+    </NotAuthorized>
+</AuthorizeView>

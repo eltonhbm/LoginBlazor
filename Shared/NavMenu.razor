@@ -1,0 +1,46 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">Login Blazor Elton</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Início
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Security">
+                <span class="oi oi-lock-unlocked" aria-hidden="true"></span> Security
+            </NavLink>
+        </li>
+        <AuthorizeView Policy="SistemasBr">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="sistemasbr">
+                    <span class="oi oi-book" aria-hidden="true"></span> SistemasBr
+                </NavLink>
+            </li>
+        </AuthorizeView>
+        <AuthorizeView Policy="Parceiro">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="parceiro">
+                    <span class="oi oi-book" aria-hidden="true"></span> Parceiro
+                </NavLink>
+            </li>
+        </AuthorizeView>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

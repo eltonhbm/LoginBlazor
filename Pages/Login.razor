@@ -1,0 +1,61 @@
+@page "/login"
+@namespace LoginComponent
+@using LoginBlazor.Authentication
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
+<AuthorizeView>
+    <NotAuthorized>
+        <div class="form-group">
+            <label for="txtUsuario">Usuário:</label>
+            <input id="txtUsuario" class="form-control-sm" type="text" placeholder="usuário" @bind-value="usuario" />
+        </div>
+        <div class="form-group">
+            <label for="txtSenha">Senha:</label>
+            <input id="txtSenha" class="form-control-sm" type="password" placeholder="senha" @bind-value="senha" />
+        </div>
+        <div style="color:red">@mensagemDeErro</div>
+        <button class="btn btn-success" @onclick="Logon">Entrar</button>
+    </NotAuthorized>
+    <Authorized>
+        <button class="btn btn-danger" @onclick="Logout">Sair</button>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private string usuario;
+    private string senha;
+    private string mensagemDeErro;
+
+    public async Task Logon()
+    {
+        mensagemDeErro = "";
+        try
+        {
+            ((CustomAuthenticationStateProvider)AuthenticationStateProvider).ValidarLogin(usuario, senha);
+            usuario = "";
+            senha = "";
+        }
+        catch (Exception e)
+        {
+            mensagemDeErro = e.Message;
+        }
+    }
+
+    public async Task Logout()
+    {
+        mensagemDeErro = "";
+        usuario = "";
+        senha = "";
+        try
+        {
+            ((CustomAuthenticationStateProvider)AuthenticationStateProvider).Logout();
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+}
